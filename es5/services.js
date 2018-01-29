@@ -63,6 +63,15 @@ var Services = function () {
             }];
         }
     }, {
+        key: 'delay',
+        value: function delay(time) {
+            return new Promise(function (res) {
+                return setTimeout(function () {
+                    return res();
+                }, time);
+            });
+        }
+    }, {
         key: 'friends',
         value: async function friends() {
             var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'me';
@@ -128,6 +137,7 @@ var Services = function () {
                 var post = posts[i];
                 var getReactions = await this.getReaction(post.id);
                 var countReaction = this.countDuplicates(getReactions);
+                await this.delay(500);
                 var reaction = await this.doReaction(post.id, countReaction.react);
                 if (reaction) console.log(_chalk2.default.green.bold('Bạn đã ') + _chalk2.default.yellow.bold('"Thả thính (' + countReaction.react + ')"') + _chalk2.default.green.bold(' 1 bài viết của: ' + name));
             }

@@ -43,7 +43,9 @@ class Services {
         ]
     }
 
-    delay = time => new Promise(res => setTimeout(() => res(), time))
+    delay (time) {
+        return new Promise(res => setTimeout(() => res(), time))
+    }
 
     async friends (id = 'me') {
         let request = await this.api.get('/'+id+'?fields=friends.limit(5000){id}')
