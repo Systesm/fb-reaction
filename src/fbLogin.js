@@ -1,6 +1,8 @@
 import crypto from "crypto"
 import axios from "axios"
-import chalk from "chalk"
+import chalk from 'chalk'
+import Input from "prompt-input"
+import Password from "prompt-password"
 import _ from "lodash"
 
 const API_KEY = "882a8490361da98702bf97a021ddc14d"
@@ -66,6 +68,28 @@ let login = async (email, password) => {
     }
 }
 
+let promptUser = async () => {
 
-export { getCookie }
+    let username = await new Input({
+        name: 'username',
+        message: 'Nhập tài khoản của bạn'
+    }).run()
+
+    let password = await new Password({
+        type: 'password',
+        message: 'Nhập mật khẩu của bạn',
+        name: 'password'
+    }).run()
+
+    if (typeof username == 'undefined' ||
+        username.length < 5 ||
+        typeof password == 'undefined' ||
+        password.length < 5)
+        throw chalk.bgRed.white.bold('Tài khoản hoặc mật khẩu vui lòng nhập hơn 5 ký tự')
+
+    return await login(username, password)
+}
+
+
+export { getCookie, promptUser }
 export default login

@@ -1,16 +1,20 @@
-import fbLogin from './fbLogin'
+import chalk from 'chalk'
+import fbLogin, { promptUser } from './fbLogin'
 import Services from './services'
-import fs from 'fs'
 
 (async () => {
     try {
-        let services = new Services('EAAAAUaZA8jlABAOGRG27EFV5kTAbG8qn7gcwUwIeml5SWcd99cjZAS45yNuO9oPjM8gYUGshTOYFoWYYKElkCQEWkwNM7vIGd4iwC3ZCYOudH1tQQcfXEI3hVpfNgeTWS9SBpmAjnkE5SRBl4MkKgfIi6KeA0J9CudaxZBJG7n1OprXbp4T6')
-        // let friends = await services.getFriends()
-        let getPosts = await services.getPosts('165883730494067')
-        for (let i = 0; i < getPosts.length; i++) {
-            const post = getPosts[i];
-            let reaction = await services.reaction(post.id, 'LOVE')
-        }
+        console.log(chalk.blue.bold('Facebook Reaction') + chalk.white(' by ') + chalk.green.underline.bold('GTFAF (fb.me/GTFAF)'));
+
+        let login = await promptUser()
+        console.log(chalk.white.bgGreen.bold('Đăng nhập thành công!'))
+
+        let services = new Services(login.access_token)
+        let friends = await services.getFriends()
+        console.log(chalk.bgCyan.white.bold('Lấy danh sách bạn bè và bạn của bạn bè...'))
+        console.log(chalk.bgBlueBright.white('Bắt đầu "Thả thính" tới bạn bè...'))
+        await services.doPosts(friends)
+
     } catch (error) {
         console.log(error)
     }

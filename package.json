@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": "./es5/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./src/index.js --exec babel-node --presets es2015,stage-2"
+    "dev": "nodemon ./src/index.js --exec babel-node --presets es2015,stage-2",
+    "start": "babel-node ./src/index.js --presets es2015,stage-2",
+    "compile": "babel ./src --out-dir ./es5 --presets es2015",
+    "build": "npm run compile && pkg . --out-path ./build/"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -18,6 +22,8 @@
     "axios": "^0.17.1",
     "chalk": "^2.3.0",
     "crypto": "^1.0.1",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "prompt-input": "^3.0.0",
+    "prompt-password": "^1.2.0"
   }
 }
